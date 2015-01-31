@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<!--[if IE 6]>
+<html id="ie6" dir="ltr" lang="en-US">
+<![endif]-->
+<!--[if IE 7]>
+<html id="ie7" dir="ltr" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html id="ie8" dir="ltr" lang="en-US">
+<![endif]-->
+<!--[if !(IE 6) | !(IE 7) | !(IE 8)  ]><!-->
+<html dir="ltr" lang="en-US">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Jumbotron Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" media="all" href="./css/flipcounter.css" />
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="./js/ie-emulation-modes-warning.js"></script>
+    <link rel="stylesheet" type="text/css" media="all" href="./css/flipcounter.css" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic' rel='stylesheet' type='text/css'>
+    
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="./js/jstween-1.1.min.js"></script>
+    <script type="text/javascript" src="./js/flipcounter.js"></script>
+    
+</head>
+ <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">LegitCoin</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Mine</a></li>
+            <li><a href="/pay">Pay</a></li>
+            <li><a href="/exchange">Exchange</a></li>
+          </ul>
+          <div id="navbar" class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right">
+        
+          <div class="form-group">
+          <a id="userLabel" class="navbar-brand"  href="#"></a>
+            </div>
+          </form>
+        </div>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <div class="starter-template">
+        <h1>Bootstrap starter template</h1>
+        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
+      </div>
+    <div id="flipcounter" style="text-align: center;">54687</div>
+
+    </div><!-- /.container -->
+    <br><br><br>
+    <script type="text/javascript">
+    var username;
+    var numCoins
+        // Make the flip counter
+        $("#flipcounter").flipCounterInit({'speed': 0.05});
+
+        var startTime = new Date().getTime();
+
+        // Update values
+        function updateLoop() {
+            var elapsedTime = new Date().getTime() - startTime;
+            $("#flipcounter").flipCounterUpdate(elapsedTime);
+            window.setTimeout(function() {
+                updateLoop();
+            }, 43);
+        }
+
+        // do it!
+        updateLoop();
+        $(document).ready(function () {
+                    alert(username);
+            var sendInfo = {
+                type:"username"
+              };
+              $.ajax({
+                url: 'http://localhost:3000',
+                type: 'post',
+                dataType: 'json',
+                data: JSON.stringify(sendInfo),
+                success: function(data) {
+                    username = data.username;
+                    numCoins = data.coins;
+                    $("#userLabel").text(username + " - " +numCoins + " coins");
+                  
+                }
+              });
+        });
+    </script>
+
+</body>
+</html>

@@ -15,7 +15,7 @@
 
     <!-- Custom styles for this template -->
     <link href="jumbotron.css" rel="stylesheet">
-
+<link rel="stylesheet" type="text/css" media="all" href="./flipcounter.css" />
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="./js/ie-emulation-modes-warning.js"></script>
@@ -95,30 +95,7 @@
     <script src="./js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="./js/legitcoin.js"></script>
   
-    <script type=text/javascript> 
-      $(document).ready(function() {
-          $("#btnSubmit").click(function(){
-              var emailStr = $("#email").val();
-              var passStr = $("#password").val();
-              var sendInfo = {
-                type:"login",
-                 username: emailStr,
-                 password: passStr
-              };
-              $.ajax({
-                url: 'http://localhost:3000',
-                type: 'post',
-                dataType: 'json',
-                data: JSON.stringify(sendInfo),
-                success: function(data) {
-                  if (data.data == "true") {
-                    window.location.href = '/main.html';
-                  }
-                }
-              });
-          }); 
-      });
-    </script>
   </body>
 </html>

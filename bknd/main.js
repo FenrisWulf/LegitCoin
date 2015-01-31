@@ -29,6 +29,10 @@ server.on('request', function (request, res, next) {
             res.write(JSON.stringify(login(data)));
 
    }
+   if (data.type=="username") {
+           res.write(JSON.stringify(username(data)));
+
+   }
     
             res.end();
   });
@@ -39,5 +43,9 @@ server.listen(3000);
 
 function login(data) {
     console.log("logging in");
-    return {data:"true"}
+    return {data:"true"};
+}
+function username(data) {
+    console.log("username");
+    return {username:"David", coins:"0"};
 }
