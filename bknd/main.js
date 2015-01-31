@@ -33,6 +33,10 @@ server.on('request', function (request, res, next) {
            res.write(JSON.stringify(username(data)));
 
    }
+   if (data.type=="incCoins") {
+           res.write(JSON.stringify(incCoins(data)));
+
+   }
     
             res.end();
   });
@@ -45,7 +49,44 @@ function login(data) {
     console.log("logging in");
     return {data:"true"};
 }
+
 function username(data) {
     console.log("username");
     return {username:"David", coins:"0"};
+}
+var buffer = {};
+function incCoins(data) {
+    console.log("incCoins");
+    var dataToWrite = {};
+    var user = data.username;
+    if (user in buffer) {
+        buffer[user] += data.numCoins;    
+    }
+    else {
+        buffer[user] = data.numCoins;
+    }
+    console.log(buffer);
+    /*fs.readFile(user, 'utf8', function(err, data_str) {
+        var fileData = JSON.parse(data_str);
+        fileData.numCoins = data.numCoins;
+        
+        console.log(JSON.stringify(fileData));
+        console.log("abc");
+        fs.writeFile("./"+user+"1", JSON.stringify(fileData));
+        
+    });*/
+    return {username:user, coins:buffer[user]};
+}
+
+setInterval(store, 5000);
+
+function store() {
+    for (var key in buffer) {
+        fs.readFile(key, 'utf8', function(err, data_str) {
+        var fileData = JSON.parse(data_str);
+        fileData.numCoins += buffer[key];
+        fs.writeFile("./"+key, JSON.stringify(fileData));
+        buffer[key] = 0;
+    });
+    }
 }
