@@ -1,0 +1,2 @@
+# LegitCoin
+HackRice2015
