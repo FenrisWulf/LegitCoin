@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<!--[if IE 6]>
+<html id="ie6" dir="ltr" lang="en-US">
+<![endif]-->
+<!--[if IE 7]>
+<html id="ie7" dir="ltr" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html id="ie8" dir="ltr" lang="en-US">
+<![endif]-->
+<!--[if !(IE 6) | !(IE 7) | !(IE 8)  ]><!-->
+<html dir="ltr" lang="en-US">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Jumbotron Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" media="all" href="./css/flipcounter.css" />
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="./js/ie-emulation-modes-warning.js"></script>
+    <link rel="stylesheet" type="text/css" media="all" href="./css/flipcounter.css" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic' rel='stylesheet' type='text/css'>
+    
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="./js/jstween-1.1.min.js"></script>
+    <script type="text/javascript" src="./js/flipcounter.js"></script>
+      <style>
+form { padding: 10px; }
+.error { border: 1px solid #b94a48!important; background-color: #fee!important; }
+</style> 
+</head>
+ <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">LegitCoin</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/main.html">Mine</a></li>
+            <li class="active"><a href="#">Pay</a></li>
+            <li><a href="/exchange.html">Exchange</a></li>
+          </ul>
+          <div id="navbar" class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right">
+        
+          <div class="form-group">
+          <a id="userLabel" class="navbar-brand"  href="#"></a>
+            </div>
+          </form>
+        </div>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <div class="starter-template">
+        <center>
+          <br><br><br><br>
+        <h1>Paying LegitCoins</h1>
+        <p class="lead">You may pay users in legitcoin by entering their e-mail and the amount to be paid.:</p>
+      
+      </center>
+      </div>
+  <form class="navbar-form">
+    <center>
+            <div class="form-group"><b>
+Pay
+  <input type="text" id="txtboxToFilter" placeholder="Enter LegitCoin Amount" class="form-control" aria-label="Amount">
+
+  LegitCoin to
+  <input type="text" id="emailBox" class="form-control" placeholder="Enter e-mail address" aria-label="Amount">
+   <button type="button" id="btnExchange" class="btn btn-success">Pay</button>
+</b>
+
+</div>
+</form>
+    </div><!-- /.container -->
+
+    <br><br><br>
+    <script type="text/javascript">
+    var username;
+    var initCoins;
+    var displayCoinAmount;
+    var actualCoinAmount;
+    var decreaseAmnt;
+      // Update values
+      function updateLoop() {
+          if (displayCoinAmount > actualCoinAmount) {
+            if (displayCoinAmount - decreaseAmnt < actualCoinAmount) {
+              displayCoinAmount = actualCoinAmount;
+            }
+            else {
+              displayCoinAmount -= decreaseAmnt;
+            }
+            $("#userLabel").text(username + " - " + displayCoinAmount + " coins");   
+          }
+                      window.setTimeout(function() {
+                updateLoop();
+            }, 43);
+
+      }
+
+        // do it!
+        updateLoop();
+
+        $(document).ready(function () {
+          $("#btnExchange").click(function(){
+            var amnt = $("#txtboxToFilter").val();
+            var email = $("#emailBox").val();
+            if (amnt <= actualCoinAmount) {
+             $("#txtboxToFilter").removeClass("error")
+              var sendInfo = {
+                type:"payCoins",
+                foo:"foo",
+                name: username,
+                numCoins:amnt,
+                otherName: email
+              };
+             $.ajax({
+                url: 'http://localhost:3000',
+                type: 'post',
+                dataType: 'json',
+                data: JSON.stringify(sendInfo),
+                success: function(data) {
+                  if (data.data == "true") {
+                    $("#emailBox").removeClass("error")
+                    actualCoinAmount -= amnt;
+                    decreaseAmnt = Math.floor(amnt / 4);
+                  }
+                  else {
+                   $("#emailBox").addClass("error")
+                 }
+                }
+              })
+           }
+           else {
+             $("#txtboxToFilter").addClass("error")
+           }
+          });
+
+          $("#txtboxToFilter").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [8, 9, 27, 13, 110, 190]) !== -1 ||
+             // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) || 
+             // Allow: home, end, left, right, down, up
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+                 // let it happen, don't do anything
+                 return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+
+            lastUpdateTime = 0;
+            var sendInfo = {
+                type:"username"
+              };
+
+              $.ajax({
+                url: 'http://localhost:3000',
+                type: 'post',
+                dataType: 'json',
+                data: JSON.stringify(sendInfo),
+                success: function(data) {
+                    username = data.username;
+                    initCoins = data.numCoins;
+                    displayCoinAmount = initCoins;
+                    actualCoinAmount = displayCoinAmount;
+                    $("#userLabel").text(username + ": " + initCoins + " coins");                  
+                }
+              });
+        });
+    </script>
+
+</body>
+</html>

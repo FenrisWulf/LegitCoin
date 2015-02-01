@@ -37,6 +37,10 @@ server.on('request', function (request, res, next) {
            res.write(JSON.stringify(incCoins(data)));
 
    }
+   if (data.type=="payCoins") {
+        
+        res.write(JSON.stringify(payCoins(data)));
+   }
     
             res.end();
   });
@@ -45,6 +49,30 @@ server.on('request', function (request, res, next) {
 
 server.listen(3000);
 
+function payCoins(data) {
+   console.log("paying");
+    var user = data.name;
+    var otherUser = data.otherName;
+    if (fs.existsSync("./"+otherUser)) {
+    // Do something
+
+   var otherData = getUserInfo(otherUser);
+   if (user in buffer) {
+        buffer[user] -= data.numCoins;    
+    }
+    else {
+        buffer[user] = -1 * data.numCoins;
+    }
+    if (otherUser in buffer) {
+        buffer[otherUser] += data.numCoins;    
+    }
+    else {
+        buffer[otherUser] = data.numCoins;
+    }
+    return {data:"true"};
+    }
+    return {data:"false"};
+}
 function login(data) {
     console.log("logging in");
     return {data:"true"};
@@ -80,9 +108,8 @@ function store() {
         if (key != 'undefined') {
         var data_str = fs.readFileSync("./"+key);
         console.log("---");
-        console.log(data_str);
         var fileData = JSON.parse(data_str);
-        fileData.numCoins += buffer[key];
+        fileData.numCoins -= -1 * buffer[key]; // #H4CK LYFE
         fs.writeFile("./"+key, JSON.stringify(fileData));
         delete buffer[key];
         }
