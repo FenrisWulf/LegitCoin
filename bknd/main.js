@@ -37,18 +37,35 @@ server.on('request', function (request, res, next) {
            res.write(JSON.stringify(incCoins(data)));
 
    }
-   if (data.type=="payCoins") {
+    if (data.type=="payCoins") {
         
         res.write(JSON.stringify(payCoins(data)));
-   }
-    
+    }
+    if (data.type=="register") {
+        res.write(JSON.stringify(register(data)));
+    }
             res.end();
   });
 });
 
 
 server.listen(3000);
-
+function register(data) {
+    var user = data.name;
+    var pass = data.pass;
+    var fileData = {};
+    fileData.username = user;
+    fileData.password = pass;
+    fileData.numCoins = 0;
+    if (!fs.existsSync("./"+user)) {
+        fs.writeFileSync("./"+user, JSON.stringify(fileData));
+        
+        return {data:"true"};
+    }
+    else {
+        return {data:"false"};
+    }
+}
 function payCoins(data) {
    console.log("paying");
     var user = data.name;
@@ -84,7 +101,7 @@ function getUserInfo(user) {
 function username(data) {
     console.log("username");
        
-    return getUserInfo("David");
+    return getUserInfo(data.username);
 }
 var buffer = {};
 function incCoins(data) {

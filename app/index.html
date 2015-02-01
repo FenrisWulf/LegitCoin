@@ -25,6 +25,10 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+form { padding: 10px; }
+.error { border: 1px solid #b94a48!important; background-color: #fee!important; }
+</style> 
   </head>
 
   <body>
@@ -43,7 +47,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <form class="navbar-form navbar-right">
             <div class="form-group">
-              <input type="text" id="email" placeholder="Email" class="form-control">
+              <input type="text" id="email" placeholder="Username " class="form-control">
             </div>
             <div class="form-group">
               <input type="password" id="password" placeholder="Password" class="form-control">
@@ -59,9 +63,32 @@
       <div class="container">
         <h1>LegitCoin</h1>
         <p>Legit coins are a powerful, innovative way to revolutionize spending and payment transactions.</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+        <p><a class="btn btn-primary btn-lg" href="#" role="button" data-toggle="modal" data-target="#myModal">Sign up &raquo;</a></p>
       </div>
     </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Sign Up</h4>
+      </div>
+      <div class="modal-body">
+         <div class="form-group">
+              <input type="text" id="userRegister" placeholder="Username" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" id="passwordRegister" placeholder="Password" class="form-control">
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="btnRegister" class="btn btn-primary">Register</button>
+      </div>
+    </div>
+  </div>
+</div>
 
     <div class="container">
       <!-- Example row of columns -->
@@ -97,5 +124,39 @@
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
     <script src="./js/legitcoin.js"></script>
   
+   <script type="text/javascript">
+
+    $(document).ready(function () {
+      $("#btnRegister").click(function(){
+         username = $("#userRegister").val();
+        var password = $("#passwordRegister").val();
+             $("#userRegister").removeClass("error")
+              var sendInfo = {
+                type: "register",
+                name: username,
+                foo: "foaaa",
+                pass: password
+              };
+             $.ajax({
+                url: 'http://localhost:3000',
+                type: 'post',
+                dataType: 'json',
+                data: JSON.stringify(sendInfo),
+                success: function(data) {
+                  if (data.data == "true") {
+                    $("#userRegister").removeClass("error")
+                    window.name = username;
+                    
+                    window.location.href = '/main.html';
+                  }
+                  else {
+                   $("#userRegister").addClass("error")
+                 }
+                }
+              })
+      });
+
+    });
+    </script>
   </body>
 </html>

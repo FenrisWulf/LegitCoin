@@ -16,6 +16,7 @@ var username = "";
                 success: function(data) {
                   if (data.data == "true") {
                     username = emailStr;
+                    window.name = username;
                     window.location.href = '/main.html';
                   }
                 }

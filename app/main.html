@@ -114,7 +114,7 @@
              totalCoins += elapsedTime - lastUpdateTime;
              lastUpdateTime = elapsedTime;
             $("#flipcounter").flipCounterUpdate(elapsedTime);
-                    $("#userLabel").text(username + ": " +totalCoins + " coins");
+            $("#userLabel").text(username + ": " +totalCoins + " coins");
             window.setTimeout(function() {
                 updateLoop();
             }, 43);
@@ -124,8 +124,11 @@
         updateLoop();
         $(document).ready(function () {
             lastUpdateTime = 0;
+            console.log( window.name);
+            username = window.name;
             var sendInfo = {
-                type:"username"
+                type:"username",
+                username: window.name
               };
 
               $.ajax({
@@ -134,6 +137,7 @@
                 dataType: 'json',
                 data: JSON.stringify(sendInfo),
                 success: function(data) {
+
                     username = data.username;
                     initCoins = data.numCoins;
                     totalCoins = initCoins;
