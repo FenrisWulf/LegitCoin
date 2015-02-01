@@ -37,7 +37,10 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript" src="./js/jstween-1.1.min.js"></script>
     <script type="text/javascript" src="./js/flipcounter.js"></script>
-    
+      <style>
+form { padding: 10px; }
+.error { border: 1px solid #b94a48!important; background-color: #fee!important; }
+</style> 
 </head>
  <body>
 
@@ -83,12 +86,15 @@
       </div>
   <form class="navbar-form">
     <center>
-            <div class="form-group">
+            <div class="form-group"><b>
 Convert
   <input type="text" id="txtboxToFilter" placeholder="Enter LegitCoin Amount" class="form-control" aria-label="Amount">
+
   LegitCoin to
   <input type="text" class="form-control" aria-label="Amount"  value="$0.00" disabled>
-   <button type="submit" id="btnExchange" class="btn btn-success">Exchange</button>
+   <button type="button" id="btnExchange" class="btn btn-success">Exchange</button>
+</b>
+
 </div>
 </form>
     </div><!-- /.container -->
@@ -123,9 +129,13 @@ Convert
         $(document).ready(function () {
           $("#btnExchange").click(function(){
             var amnt = $("#txtboxToFilter").val();
+
+            if (amnt <= actualCoinAmount) {
+             $("#txtboxToFilter").removeClass("error")
               var sendInfo = {
                 type:"incCoins",
-                username: username,
+                foo:"foo",
+                name: username,
                 numCoins:-1 * amnt
               };
              $.ajax({
@@ -135,9 +145,13 @@ Convert
                 data: JSON.stringify(sendInfo),
                 success: function(data) {
                     actualCoinAmount -= amnt;
-                    decreaseAmnt = Math.floor(amnt / 7);
+                    decreaseAmnt = Math.floor(amnt / 4);
                 }
               })
+           }
+           else {
+             $("#txtboxToFilter").addClass("error")
+           }
           });
 
           $("#txtboxToFilter").keydown(function (e) {
@@ -171,7 +185,7 @@ Convert
                     initCoins = data.numCoins;
                     displayCoinAmount = initCoins;
                     actualCoinAmount = displayCoinAmount;
-                    $("#userLabel").text(username + " - " + initCoins + " coins");                  
+                    $("#userLabel").text(username + ": " + initCoins + " coins");                  
                 }
               });
         });

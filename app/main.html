@@ -98,7 +98,8 @@
             var elapsedTime = new Date().getTime() - startTime;
             var sendInfo = {
                 type:"incCoins",
-                username: username,
+                foo:"foo",
+                name: username,
                 numCoins:elapsedTime - lastUpdateTime
               };
              $.ajax({
@@ -113,7 +114,7 @@
              totalCoins += elapsedTime - lastUpdateTime;
              lastUpdateTime = elapsedTime;
             $("#flipcounter").flipCounterUpdate(elapsedTime);
-                    $("#userLabel").text(username + " - " +totalCoins + " coins");
+                    $("#userLabel").text(username + ": " +totalCoins + " coins");
             window.setTimeout(function() {
                 updateLoop();
             }, 43);
@@ -136,7 +137,7 @@
                     username = data.username;
                     initCoins = data.numCoins;
                     totalCoins = initCoins;
-                    $("#userLabel").text(username + " - " + initCoins + " coins");                  
+                    $("#userLabel").text(username + ": " + initCoins + " coins");                  
                 }
               });
         });

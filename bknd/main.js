@@ -62,7 +62,8 @@ var buffer = {};
 function incCoins(data) {
     console.log("incCoins");
     var dataToWrite = {};
-    var user = data.username;
+    console.log(data);
+    var user = data.name;
     if (user in buffer) {
         buffer[user] += data.numCoins;    
     }
@@ -72,18 +73,18 @@ function incCoins(data) {
     return {username:user, numCoins:buffer[user]};
 }
 
-setInterval(store, 5000);
+setInterval(store, 100);
 
 function store() {
     for (var key in buffer) {
-        fs.readFile(key, 'utf8', function(err, data_str) {
-        console.log(err);
+        if (key != 'undefined') {
+        var data_str = fs.readFileSync("./"+key);
         console.log("---");
         console.log(data_str);
         var fileData = JSON.parse(data_str);
         fileData.numCoins += buffer[key];
         fs.writeFile("./"+key, JSON.stringify(fileData));
         delete buffer[key];
-    });
+        }
     }
 }
