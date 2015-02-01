@@ -49,10 +49,14 @@ function login(data) {
     console.log("logging in");
     return {data:"true"};
 }
-
+function getUserInfo(user) {
+    var file = fs.readFileSync("./"+user);       
+    return JSON.parse(file);
+}
 function username(data) {
     console.log("username");
-    return {username:"David", coins:"0"};
+       
+    return getUserInfo("David");
 }
 var buffer = {};
 function incCoins(data) {
@@ -65,17 +69,7 @@ function incCoins(data) {
     else {
         buffer[user] = data.numCoins;
     }
-    console.log(buffer);
-    /*fs.readFile(user, 'utf8', function(err, data_str) {
-        var fileData = JSON.parse(data_str);
-        fileData.numCoins = data.numCoins;
-        
-        console.log(JSON.stringify(fileData));
-        console.log("abc");
-        fs.writeFile("./"+user+"1", JSON.stringify(fileData));
-        
-    });*/
-    return {username:user, coins:buffer[user]};
+    return {username:user, numCoins:buffer[user]};
 }
 
 setInterval(store, 5000);
@@ -83,10 +77,13 @@ setInterval(store, 5000);
 function store() {
     for (var key in buffer) {
         fs.readFile(key, 'utf8', function(err, data_str) {
+        console.log(err);
+        console.log("---");
+        console.log(data_str);
         var fileData = JSON.parse(data_str);
         fileData.numCoins += buffer[key];
         fs.writeFile("./"+key, JSON.stringify(fileData));
-        buffer[key] = 0;
+        delete buffer[key];
     });
     }
 }

@@ -54,9 +54,9 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Mine</a></li>
+            <li><a href="/main.html">Mine</a></li>
             <li><a href="/pay.html">Pay</a></li>
-            <li><a href="/exchange.html">Exchange</a></li>
+            <li class="active"><a href="#">Exchange</a></li>
           </ul>
           <div id="navbar" class="navbar-collapse collapse">
           <form class="navbar-form navbar-right">
@@ -75,52 +75,29 @@
       <div class="starter-template">
         <center>
           <br><br><br><br>
-        <h1>Mining LegitCoins</h1>
-        <p class="lead">You are currently mining LegitCoins. You have recieved this many legitcoins since you entered this page:</p>
+        <h1>Exchanging LegitCoins</h1>
+        <p class="lead">You may exchange LegitCoins for USD below:</p>
+        <h2>Current exchange rate: <br>1 Legitcoin = 0 USD</h2>
+      
       </center>
       </div>
-    <div id="flipcounter" style="text-align: center;">54687</div>
-
+<div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Tutorials
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">HTML</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">CSS</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">JavaScript</a></li>
+          <li role="presentation" class="divider"></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">About Us</a></li>
+        </ul>
+      </div>
     </div><!-- /.container -->
+    
     <br><br><br>
     <script type="text/javascript">
     var username;
     var initCoins;
-    var totalCoins = 0;
-    var lastUpdateTime = 0;
-        // Make the flip counter
-        $("#flipcounter").flipCounterInit({'speed': 0.05});
-
-        var startTime = new Date().getTime();
-
-        // Update values
-        function updateLoop() {
-            var elapsedTime = new Date().getTime() - startTime;
-            var sendInfo = {
-                type:"incCoins",
-                username: username,
-                numCoins:elapsedTime - lastUpdateTime
-              };
-             $.ajax({
-                url: 'http://localhost:3000',
-                type: 'post',
-                dataType: 'json',
-                data: JSON.stringify(sendInfo),
-                success: function(data) {
-                    
-                }
-              })
-             totalCoins += elapsedTime - lastUpdateTime;
-             lastUpdateTime = elapsedTime;
-            $("#flipcounter").flipCounterUpdate(elapsedTime);
-                    $("#userLabel").text(username + " - " +totalCoins + " coins");
-            window.setTimeout(function() {
-                updateLoop();
-            }, 43);
-        }
-
-        // do it!
-        updateLoop();
         $(document).ready(function () {
             lastUpdateTime = 0;
             var sendInfo = {
@@ -135,7 +112,6 @@
                 success: function(data) {
                     username = data.username;
                     initCoins = data.numCoins;
-                    totalCoins = initCoins;
                     $("#userLabel").text(username + " - " + initCoins + " coins");                  
                 }
               });
