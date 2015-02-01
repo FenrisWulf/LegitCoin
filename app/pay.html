@@ -114,7 +114,7 @@ Pay
             else {
               displayCoinAmount -= decreaseAmnt;
             }
-            $("#userLabel").text(username + " - " + displayCoinAmount + " coins");   
+            $("#userLabel").text(username + ": " + displayCoinAmount + " coins");   
           }
                       window.setTimeout(function() {
                 updateLoop();
@@ -178,7 +178,8 @@ Pay
 
             lastUpdateTime = 0;
             var sendInfo = {
-                type:"username"
+                type:"username",
+                username: window.name
               };
 
               $.ajax({
