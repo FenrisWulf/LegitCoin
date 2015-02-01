@@ -80,7 +80,7 @@ form { padding: 10px; }
           <br><br><br><br><br><br><br><br><br><br>
         <h1>Exchanging LegitCoins</h1>
         <p class="lead">You may exchange LegitCoins for USD below:</p>
-        <h2>Current exchange rate: <br>1 Legitcoin = 0 USD</h2>
+        <h2>Current exchange rate: <br>1 LegitCoin = 0 USD</h2>
       
       </center>
       </div>
@@ -145,7 +145,7 @@ Convert
                 data: JSON.stringify(sendInfo),
                 success: function(data) {
                     actualCoinAmount -= amnt;
-                    decreaseAmnt = Math.floor(amnt / 4);
+                    decreaseAmnt = Math.floor(amnt / 4) + 1;
                 }
               })
            }

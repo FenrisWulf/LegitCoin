@@ -125,10 +125,13 @@ function store() {
         if (key != 'undefined') {
         var data_str = fs.readFileSync("./"+key);
         if (data_str != 'undefined') {
-        console.log("---");
+        console.log("DataStr");
+        console.log(data_str);
         var fileData = JSON.parse(data_str);
         fileData.numCoins -= -1 * buffer[key]; // #H4CK LYFE
         fs.writeFile("./"+key, JSON.stringify(fileData));
+        console.log("fileData");
+        console.log(JSON.stringify(fileData));
         delete buffer[key];
         }
         }

@@ -78,8 +78,8 @@ form { padding: 10px; }
       <div class="starter-template">
         <center>
           <br><br><br><br><br><br><br><br><br><br>
-        <h1>Paying LegitCoins</h1>
-        <p class="lead">You may pay users in legitcoin by entering their username and the amount to be paid.:</p>
+        <h1>Paying LegitCoin</h1>
+        <p class="lead">You may pay users in LegitCoin by entering their username and the amount to be paid.:</p>
       
       </center>
       </div>
@@ -87,9 +87,9 @@ form { padding: 10px; }
     <center>
             <div class="form-group"><b>
 Pay
-  <input type="text" id="txtboxToFilter" placeholder="Enter LegitCoin Amount" class="form-control" aria-label="Amount">
+  <input type="text" id="txtboxToFilter" placeholder="Enter Legitcoin Amount" class="form-control" aria-label="Amount">
 
-  LegitCoin to
+  LegitCoins to
   <input type="text" id="emailBox" class="form-control" placeholder="Enter username" aria-label="Amount">
    <button type="button" id="btnExchange" class="btn btn-success">Pay</button>
 </b>
@@ -147,7 +147,7 @@ Pay
                   if (data.data == "true") {
                     $("#emailBox").removeClass("error")
                     actualCoinAmount -= amnt;
-                    decreaseAmnt = Math.floor(amnt / 4);
+                    decreaseAmnt = Math.floor(amnt / 4) + 1;
                   }
                   else {
                    $("#emailBox").addClass("error")
