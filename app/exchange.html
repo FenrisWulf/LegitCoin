@@ -33,7 +33,7 @@
     <script src="./js/ie-emulation-modes-warning.js"></script>
     <link rel="stylesheet" type="text/css" media="all" href="./css/flipcounter.css" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic' rel='stylesheet' type='text/css'>
-    
+    <link href="./css/cover.css" rel="stylesheet">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript" src="./js/jstween-1.1.min.js"></script>
     <script type="text/javascript" src="./js/flipcounter.js"></script>
@@ -77,7 +77,7 @@ form { padding: 10px; }
 
       <div class="starter-template">
         <center>
-          <br><br><br><br>
+          <br><br><br><br><br><br><br><br><br><br>
         <h1>Exchanging LegitCoins</h1>
         <p class="lead">You may exchange LegitCoins for USD below:</p>
         <h2>Current exchange rate: <br>1 Legitcoin = 0 USD</h2>
@@ -115,7 +115,7 @@ Convert
             else {
               displayCoinAmount -= decreaseAmnt;
             }
-            $("#userLabel").text(username + " - " + displayCoinAmount + " coins");   
+            $("#userLabel").text(username + ": " + displayCoinAmount + " coins");   
           }
                       window.setTimeout(function() {
                 updateLoop();

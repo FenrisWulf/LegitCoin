@@ -14,8 +14,9 @@
     <link href="./css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="jumbotron.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" media="all" href="./flipcounter.css" />
+    <link href="./css/jumbotron.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" media="all" href="./flipcounter.css" />
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="./js/ie-emulation-modes-warning.js"></script>
@@ -28,7 +29,8 @@
     <style>
 form { padding: 10px; }
 .error { border: 1px solid #b94a48!important; background-color: #fee!important; }
-</style> 
+</style>
+<link href="./css/cover.css" rel="stylesheet"> 
   </head>
 
   <body>
@@ -146,7 +148,7 @@ form { padding: 10px; }
                   if (data.data == "true") {
                     $("#userRegister").removeClass("error")
                     window.name = username;
-                    
+
                     window.location.href = '/main.html';
                   }
                   else {

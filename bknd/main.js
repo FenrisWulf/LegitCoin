@@ -124,11 +124,13 @@ function store() {
     for (var key in buffer) {
         if (key != 'undefined') {
         var data_str = fs.readFileSync("./"+key);
+        if (data_str != 'undefined') {
         console.log("---");
         var fileData = JSON.parse(data_str);
         fileData.numCoins -= -1 * buffer[key]; // #H4CK LYFE
         fs.writeFile("./"+key, JSON.stringify(fileData));
         delete buffer[key];
+        }
         }
     }
 }
